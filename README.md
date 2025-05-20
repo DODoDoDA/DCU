@@ -1,6 +1,6 @@
 # DCU
 
-## Env
+## Install
 ```
 pip install -r requirements.txt
 ```
