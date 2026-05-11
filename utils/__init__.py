@@ -4,4 +4,4 @@ from .inc_net import CilModel, SimpleLinear
 from .loss import loss_PreCE, loss_KD, kd_loss
 from .gen_data import GenDataset, GenDataset_Mnist
 from .topological_methods import load_topologies, compute_weight_matrix,gen_round_topologies
-from .class_pruner import acculumate_feature, calculate_cp, get_threshold_by_sparsity, TFIDFPruner
+#from .class_pruner import acculumate_feature, calculate_cp, get_threshold_by_sparsity, TFIDFPruner
