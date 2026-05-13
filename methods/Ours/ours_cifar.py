@@ -49,7 +49,6 @@ class ours_cifar(BaseLearner):
             self._networks_list[idx] = deepcopy(tmp_network)
             self._old_networks_list[idx] = None
 
-########CL part
     def CL_train(self, data_manager, gen = False):
         setup_seed(self.seed)
         self._cur_task += 1
@@ -175,7 +174,6 @@ class ours_cifar(BaseLearner):
         os.makedirs(model_save_path, exist_ok=True)
         torch.save(self._networks_list[0], model_save_path + '/After_CL' + str(self._cur_task) + '_Cid' + str(0) + '.pth')
 
-#######generator part
     def generator_init(self):
         self.config = OmegaConf.load(self.args['config'])
         self.config.model.params.ckpt_path = self.args['ldm_ckpt']
@@ -264,9 +262,9 @@ class ours_cifar(BaseLearner):
         sampler = DDIMSampler(self._generator)
         os.makedirs(self.syn_imgs_dir, exist_ok=True)
         prompt = "a photo of *"
-        n_samples = 40
-        scale = 10.0
-        ddim_steps = 50
+        n_samples = 40 #50
+        scale = 10.0 #
+        ddim_steps = 50 #100
         ddim_eta = 0.0
         for cid in trange(self.args['num_users'], desc="Client Sampling"):
             self._generator.embedding_manager.load_state_dict(inv_text_embeds[cid])
@@ -299,7 +297,6 @@ class ours_cifar(BaseLearner):
                                 Image.fromarray(x_sample.astype(np.uint8)).save(os.path.join(outdir,  f"{tmp_cls}-{tmp_cls_num}.jpg"))
                                 tmp_cls_num += 1
 
-#########ul part  
     def UL_train(self, data_manager, cur_ul_class):
         setup_seed(self.seed)
         print("===========ul cls ",cur_ul_class,"===========")
@@ -353,7 +350,7 @@ class ours_cifar(BaseLearner):
         self._known_classes_set.remove(self.cur_ul_class)
         for cid in range(self.args["num_users"]):
             self._old_networks_list[cid] = self._networks_list[cid].copy().freeze()
-##########topo eval/log
+
     def eval_task(self):
         tot_acc_list=[]
         cls_acc_list=[]
